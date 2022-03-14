@@ -1,0 +1,22 @@
+    #-f 指定的dockerfile文件
+    #-t 镜像名称和tag
+    #../cms_web 工作目录
+     #docker build -f Dockerfile -t cms_web:v1 ../cms_web
+
+    #指定golang镜像对项目进行依赖安装和打包
+    FROM golang  
+    # 将容器的工作目录设置为/
+    #dockerfile 工作目录设置为/,不管在什么地方都设置/,再调用运行dockerfile时，加上运行目录
+    # WORKDIR 工作目录可以设置变量，vim /etc/profile 
+    # 列如：WORKDIR $GOPATH/src/github.com/EDDYCJY/go-gin-example
+    WORKDIR /
+    #安装gin并更新
+    RUN go get -v github.com/gin-gonic/gin
+    COPY . /
+    #打包项目生成exe文件
+    RUN go build .
+
+ 
+ 
+
+

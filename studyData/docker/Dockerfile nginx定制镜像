@@ -1,0 +1,40 @@
+1、在根项目下创建Dockerfile
+代码如下:
+
+# 设置基础镜像 nginx是环境加载的镜像，可以通过 docker images 查看当前的镜像REPOSITORY
+FROM nginx
+# 将当前目录data/html/文件中的内容复制到 /usr/share/nginx/html/ 这个目录下面
+COPY data/html/  /usr/share/nginx/html/
+#用本地的 default.conf 配置来替换nginx镜像里的默认配置
+COPY config/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+
+#暂时不需要
+# 安装 requirements.txt 中指定的包
+RUN pip install --trusted-host pypi.python.org -r requirements.txt
+
+
+2、创建镜像
+在当前目录下, 特别注意“.”，代表运行当前目录下的dockerfile/或者写指定path
+docker build -t <新镜像名称> .
+
+3、查看镜像是否创建
+docker images
+
+4、开启端口运行镜像
+
+docker run \
+  --name <容器名称>\
+  -d -p 80:80 \
+-d <镜像REPOSITORY:TAG>
+返回容器id
+
+
+5、查看容器id是否开启
+docker ps
+
+6、如果docker ps没有查看到容器id,查看 docker ps -as 是否存在
+存在，表示生成的镜像有问题，dockerfile文件代码有错误
+
+7、查看容器log错误信息
+docker logs  <容器ID>
+

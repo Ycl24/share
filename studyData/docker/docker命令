@@ -1,0 +1,59 @@
+1. docker version
+解析：查看Docker版本
+2. docker images
+解析：查看已下载的镜像
+3. docker ps
+解析：查看运行的容器
+4. docker info
+解析：显示Docker系统信息，包括镜像和容器数。
+5. docker search
+解析：从Docker Hub中搜索符合条件的镜像。
+6. docker pull
+解析：从Docker Hub中拉取或者更新指定镜像。
+7. docker login
+解析：按步骤输入在Docker Hub注册的用户名、密码和邮箱即可完成登录。
+8. docker images
+解析：列出本地所有镜像。
+9. docker history
+解析：查看指定镜像的创建历史。
+10. docker start|stop|restart
+解析：启动、停止和重启一个或多个指定容器。
+11. docker kill
+解析：杀死一个或多个指定容器进程。
+12. docker save
+解析：将指定镜像保存成tar归档文件，docker load的逆操作。
+13. docker load
+解析：从tar镜像归档中载入镜像，docker save的逆操作。
+14. docker export
+解析：将指定的容器保存成tar归档文件，docker import的逆操作。
+15. docker import
+解析：从归档文件（支持远程文件）创建一个镜像，export的逆操作，可为导入镜像打上标签。
+16. docker pause
+解析：暂停某一容器的所有进程。
+17. docker unpause
+解析：恢复某一容器的所有进程。
+18. docker push
+解析：将镜像推送至远程仓库，默认为Docker Hub。
+19. docker run
+docker run -d --name cms_web -p 80:80 nginx
+给容器一个名称 cms_web 
+解析：启动一个容器，在其中运行指定命令。
+20.docker rm -f 端口ID
+解析：强制删除端口
+21.docker commit 端口ID name
+解析：给容器一个名称  name 是名称
+22.docker rmi $(docker images -q -f dangling=true)
+解析：删除所有未打 name 标签的镜像
+
+23. docker rmi $(docker images | grep "none" | awk '{print $3}') 
+解析：可以删除所有名字中带 “none” 关键字的镜像，即可以把所有编译错误的镜像删除。
+
+24.docker image prune
+解析：清理所有悬挂（<none>）镜像
+
+25.docker rm -lv <容器id>
+解析：清理停止的容器
+
+
+26.docker exec -it redis-test /bin/bash
+解析:进入mysql-test名称 容器
