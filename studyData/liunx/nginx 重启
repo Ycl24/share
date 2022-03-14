@@ -1,0 +1,12 @@
+修改域名:
+1、nginx 重启
+/usr/local/nginx/sbin/nginx -s reload 
+
+2、php-fpm 重启
+查看进程 ps aux | grep php
+ 先清除所有进程pkill php-fpm
+
+3、php-fpm启动
+/usr/local/php-7.2.6/sbin/php-fpm -y /usr/local/php-7.2.6/etc/php-fpm.conf
+
+/usr/local/php/sbin/php-fpm -y /usr/local/php/etc/php-fpm.conf

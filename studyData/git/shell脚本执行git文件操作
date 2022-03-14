@@ -1,0 +1,63 @@
+git clone url
+
+cd ./unity_ticket
+
+get_branch_list=`git branch -r`
+
+# origin_list=("monitor_task_856366015" "robot_hot_6957231")
+#要删除的分支名数组
+origin_list=("monitor_task_856366015" "robot_hot_6957231" "ID6954537_FetchAgentByUser" "multi_game_id" "ticket_v2" "chadli" "iter1031" "ticket_agent")
+
+#要删除配置文件
+del_file=("./config/client.toml" "./config/database.toml" "./config/redis.toml")
+
+function branch_list {
+	#去除主分支
+	br_a=${get_branch_list//'origin/HEAD -> origin/master'/''}
+	br_b=${br_a//'origin/master'/''}
+	#去除origin/
+	br_c=${br_b//'origin/'/''}
+	
+	#循环分支数组
+	for s in ${br_c[@]}
+	do
+		echo "~sh start $s"
+		num=0
+		if echo "${origin_list[@]}" | grep -w "$s" &>/dev/null; then
+			# echo "~ yes Branch $s || git checkout $s"
+			git checkout $s
+			#获取 Git 当前分支名称
+			name=`git rev-parse --abbrev-ref HEAD`
+			#判断当前分支是否跟上面分支相同
+			if  [ $name == $s ]
+			then
+				#拉去当前分支最新代码
+				git pull origin $s
+				#判断当前分支下要删除配置文件 是否有
+					for file in ${del_file[@]}
+					do
+						if [[  -f "${file}" ]]; then
+							#git rm -rf ${file}
+							rm -rf ${file}
+							num=`expr $num + 1`
+						fi
+					done
+				
+			fi
+		fi
+		#判断是否有做删除配置文件的操作
+		if [ $num -gt 0 ]; then
+			git add .
+			git commit -m "删除配置文件,shell脚本执行"
+			git push origin $s
+			echo "~ yes 删除成功 || git checkout $s"
+		fi
+		echo "~sh end $s"
+	done
+
+
+}
+result=`branch_list 1`
+
+echo $result
+
